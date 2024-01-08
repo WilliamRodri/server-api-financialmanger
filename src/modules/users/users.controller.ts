@@ -14,11 +14,11 @@ import { UpdateUserDtos } from './dtos/users/update-user.dtos';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
-@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   getUsers() {
     return this.usersService.getUsers();
   }
@@ -29,11 +29,13 @@ export class UsersController {
   }
 
   @Patch('update/:id')
+  @UseGuards(AuthGuard('jwt'))
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDtos) {
     return this.usersService.updateUser(id, body);
   }
 
   @Delete('delete/:id')
+  @UseGuards(AuthGuard('jwt'))
   deleteUser(@Param('id') id: string) {
     return this.usersService.deleteUser(id);
   }
